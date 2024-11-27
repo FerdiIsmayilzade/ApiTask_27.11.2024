@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Repository.Exceptions;
 using Repository.Repositories.Interfaces;
 using Service.Helpers.DTOs.Colors;
@@ -48,7 +49,7 @@ namespace Service.Services
 
         public async Task<IEnumerable<DiscountDto>> GetAllAsync()
         {
-            return _mapper.Map<IEnumerable<DiscountDto>>(await _repository.GetAllAsync());
+            return _mapper.Map<IEnumerable<DiscountDto>>(await _repository.GetAllAsync(x=>x.Include(m=>m.ProductDiscounts).ThenInclude(m=>m.Product)));
         }
 
         public async Task<DiscountDto> GetByIdAsync(int id)

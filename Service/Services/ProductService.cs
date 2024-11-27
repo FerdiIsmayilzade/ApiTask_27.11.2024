@@ -129,22 +129,23 @@ namespace Service.Services
             await _repository.EditAsync(_mapper.Map<Product>(existProduct));
         }
 
-        //public async Task<IEnumerable<ProductDto>> GetAllAsync()
-        //{
-        //    return _mapper.Map<IEnumerable<ProductDto>>(await _repository.GetAllAsync());
-
-        //}
-
         public async Task<IEnumerable<ProductDto>> GetAllAsync()
         {
-            var products =
-         await this._repository
-                   .GetAllWithCategoryAsync(x => x.Category,x=>x.Images)
-                            
-         .ConfigureAwait(false);
-            
-            return _mapper.Map<IEnumerable<ProductDto>>(products);
+            return _mapper.Map<IEnumerable<ProductDto>>(await _repository.GetAllAsync(m=>m.Include(m=>m.Category).Include(m=>m.Images)
+            .Include(m=>m.Colors).ThenInclude(m=>m.Color).Include(m=>m.Discounts).ThenInclude(m=>m.Discount)));
+
         }
+
+        //public async Task<IEnumerable<ProductDto>> GetAllAsync()
+        //{
+        //    var products =
+        // await this._repository
+        //           .GetAllWithCategoryAsync(x => x.Category,x=>x.Images)
+
+        // .ConfigureAwait(false);
+
+        //    return _mapper.Map<IEnumerable<ProductDto>>(products);
+        //}
 
 
         public async Task<ProductDto> GetByIdAsync(int id)

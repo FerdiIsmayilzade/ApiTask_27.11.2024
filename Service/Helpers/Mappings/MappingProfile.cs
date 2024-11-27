@@ -30,7 +30,10 @@ namespace Service.Helpers.Mappings
             #region Products
             CreateMap<Product, ProductDto>()
                            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
-                           .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images));
+                           .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.Images))
+                           .ForMember(dest => dest.ColorNames, opt => opt.MapFrom(src => src.Colors.Select(m=>m.Color.Name)))
+                           .ForMember(dest => dest.Discounts, opt => opt.MapFrom(src => src.Discounts.Select(m=>m.Discount.Percent)));
+
             CreateMap<ProductCreateDto, Product>()
                 .ForMember(dest => dest.Images, opt => opt.Ignore());
             CreateMap<ProductEditDto, Product>()

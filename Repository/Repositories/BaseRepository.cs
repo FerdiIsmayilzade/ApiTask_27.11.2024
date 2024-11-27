@@ -40,10 +40,10 @@ namespace Repository.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await _dbSet.ToListAsync();
-        }
+        //public async Task<IEnumerable<T>> GetAllAsync()
+        //{
+        //    return await _dbSet.ToListAsync();
+        //}
 
         public async Task<IEnumerable<T>> GetAllAsync(Func<IQueryable<T>, IQueryable<T>> include = null)
         {
